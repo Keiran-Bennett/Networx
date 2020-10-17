@@ -9,7 +9,7 @@
     <Property Name="Genre" Type="nvarchar" MaxLength="50" Nullable="false" />
     <Property Name="Year_published" Type="date" Nullable="false" />
     <Property Name="Price_range" Type="nvarchar" MaxLength="50" Nullable="false" />
-    <Property Name="Review_Score" Type="int" />
+    <Property Name="Review_Score" Type="decimal" Precision="18" Scale="0" />
   </EntityType>
   <EntityType Name="Review">
     <Key>

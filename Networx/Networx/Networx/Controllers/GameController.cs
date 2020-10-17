@@ -7,6 +7,8 @@ using System.Web;
 using System.Web.Mvc;
 using System.Security.Cryptography;
 using System.Data.Entity.Infrastructure;
+using System.Collections;
+using System.Data.Entity.ModelConfiguration.Conventions;
 
 namespace Networx.Controllers
 {
@@ -17,8 +19,8 @@ namespace Networx.Controllers
         //Create an istance of the DB to called in the methods 
       networxEntities db = new networxEntities();
         
-        //The games list called index as the starting page on html
-        public ActionResult Index(string search, string searchBox)
+        //Winsorized means are used to defend against self promotion and slandering reputation attacks 
+        private List<Game> reviewScore()
         {
             //Qry string to gather all the games 
             string qryText = "SELECT * FROM Game";
@@ -28,7 +30,7 @@ namespace Networx.Controllers
             foreach (Game game in tempGames)
             {
                 //Initalise the variables needed for calculating the average review 
-                int tempReviewScore = 0;
+            
                 int count = 0;
 
                 //Qry to get all the reviews associated with the specific game
@@ -36,28 +38,67 @@ namespace Networx.Controllers
                 //Convert data from database to a list of objects
                 List<Review> gameReviews = db.Reviews.SqlQuery(tempQryText).ToList();
 
-                //Loop through each review for every game
-                foreach(Review review in gameReviews)
+                
+                //Create arraylist for calculation
+                ArrayList reviewscores = new ArrayList();
+                //Add to an arraylist for calculations 
+                foreach(Review r in gameReviews)
                 {
-                    //Total all the reviews
-                    tempReviewScore = tempReviewScore + Convert.ToInt32(review.Review_score);
-                    //Amount of reviews for average
-                    count = count + 1;
+                    reviewscores.Add(r.Review_score);
                 }
-                //If count = 0 set the score to zero to avoid zerodivison error and apply it to the model
-                if (count != 0)
-                {
-                    game.Review_Score = tempReviewScore / count;
-                }
-                else
+                //Sort in order for winsorized mean
+                reviewscores.Sort();
+                //Declare vairables needed
+                double totalScore = 0;
+                count = reviewscores.Count;
+
+                //Error handling
+                if (count == 0)
                 {
                     game.Review_Score = 0;
                 }
-                
-            }
+                //Normal mean
+                else if (count <= 5)
+                {
+                    //Loop through each review for every game
+                    foreach (Review review in gameReviews)
+                    {
+                        totalScore = totalScore + review.Review_score;
+                    }
+                    game.Review_Score = Convert.ToDecimal(totalScore / count);
+                }
+                else if (count > 5)//Winsorized mean to protect against reputation attacks 
+                {
+                    //Define threshold to get ten percent low and high 
+                    double threshold = Math.Ceiling(count * 0.1);
 
-            //Order the list in descending order 
+                    for(int i = 0; i < threshold; i++)
+                    {
+                        //Lowest ten percent equal the same
+                        reviewscores[i] = reviewscores[i + 1];
+                        //Highest amount equals the same
+                        reviewscores[(count - 1)-i] = reviewscores[(count - 1) - (i+1)];
+                    }
+                    //Add total score together 
+                    foreach (Review review in gameReviews)
+                    {
+                        totalScore = totalScore + review.Review_score;
+                    }
+                    //Output it to the model value 
+                    game.Review_Score = Convert.ToDecimal(totalScore / count);
+
+                }   
+            }
             List<Game> games = tempGames.OrderByDescending(x => x.Review_Score).ToList();
+            return games;
+        }
+
+        //The games list called index as the starting page on html
+        public ActionResult Index(string search, string searchBox)
+        {
+
+
+            List<Game> games  = reviewScore();
 
             //Used for the search box to filter based on the characteistics
             if (games != null)
@@ -148,7 +189,6 @@ namespace Networx.Controllers
             //Loop through and delete all related values before deleting the primary object
             foreach (Review r in reviews)
             {
-                
                 db.Reviews.Remove(r);
             }
 

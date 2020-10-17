@@ -14,7 +14,7 @@
           <Property Name="Genre" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Year_published" Type="date" Nullable="false" />
           <Property Name="Price_range" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="Review_Score" Type="int" />
+          <Property Name="Review_Score" Type="decimal" Precision="18" Scale="0" />
         </EntityType>
         <EntityType Name="Review">
           <Key>
@@ -85,7 +85,7 @@
           <Property Name="Genre" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Year_published" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="Price_range" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Review_Score" Type="Int32" />
+          <Property Name="Review_Score" Type="Decimal" Precision="18" Scale="0" />
           <NavigationProperty Name="Reviews" Relationship="Self.FK_Review_Games" FromRole="Game" ToRole="Review" />
         </EntityType>
         <EntityType Name="Review">

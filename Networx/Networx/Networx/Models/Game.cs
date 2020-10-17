@@ -11,7 +11,8 @@ namespace Networx.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+
     public partial class Game
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -21,11 +22,23 @@ namespace Networx.Models
         }
     
         public int Game_ID { get; set; }
+        [Required(ErrorMessage = "Please enter a title")]
+        //Prevents sql injection through tautology
+        [RegularExpression("@^[^=]&", ErrorMessage = "cannot put equals in this form")]
         public string Title { get; set; }
+        [Required(ErrorMessage = "Please enter a genre")]
+        //Prevents sql injection through tautology
+        [RegularExpression("@^[^=]&", ErrorMessage = "cannot put equals in this form")]
         public string Genre { get; set; }
+        [Required(ErrorMessage = "Please enter a Year published")]
+        //Prevents sql injection through tautology
+        [RegularExpression("@^[^=]&", ErrorMessage = "cannot put equals in this form")]
         public System.DateTime Year_published { get; set; }
+        [Required(ErrorMessage = "Please enter a price range")]
+        //Prevents sql injection through tautology
+        [RegularExpression("@^[^=]&", ErrorMessage = "cannot put equals in this form")]
         public string Price_range { get; set; }
-        public Nullable<int> Review_Score { get; set; }
+        public Nullable<decimal> Review_Score { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Review> Reviews { get; set; }
