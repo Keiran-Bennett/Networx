@@ -13,22 +13,24 @@ namespace Networx.Controllers
 {
     public class AccountController : Controller
     {
-        //Creates an instance of the database that can be used in every method 
-        private networxEntities db = new networxEntities();
-
+          
+        //Taken from a website and reworked into a method due to the crypto nature of the code 
         private string sha256(string entry)
         {
+            //Creates an instance of the hash
             using (SHA256 sha256Hash = SHA256.Create())
             {
-                // ComputeHash - returns byte array  
+                // Gets the bytes of all the text entered into the hash 
                 byte[] bytes = sha256Hash.ComputeHash(Encoding.UTF8.GetBytes(entry));
 
-                // Convert byte array to a string   
+                // Convert bytes into string by creating an object from stringbuilder
                 StringBuilder builder = new StringBuilder();
+                //Loopd through all the bytes and adds the string as a two hexidecimal characters
                 for (int i = 0; i < bytes.Length; i++)
                 {
                     builder.Append(bytes[i].ToString("x2"));
                 }
+                //Return the last value as string
                 return builder.ToString();
             }
 
