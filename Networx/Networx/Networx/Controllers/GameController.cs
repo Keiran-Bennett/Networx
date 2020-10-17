@@ -148,7 +148,7 @@ namespace Networx.Controllers
             //Loop through and delete all related values before deleting the primary object
             foreach (Review r in reviews)
             {
-                //Remove each object
+                
                 db.Reviews.Remove(r);
             }
 
