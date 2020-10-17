@@ -1,0 +1,40 @@
+﻿@model IEnumerable<Networx.Models.Review>
+
+@{
+    ViewBag.Title = "ReviewPage";
+
+}
+
+<h2>ReviewPage</h2>
+
+<p>
+    @Html.ActionLink("Create New", "addreview", "Review")
+</p>
+@*Create the table header for the top*@
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Review_text)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Review_score)
+        </th>
+        <th></th>
+    </tr>
+
+    @*C# razor to loop through the database and get all the values that are passed into the model for population*@
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Review_text)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Review_score)
+            </td>
+        </tr>
+    }
+
+</table>
+
+@Html.ActionLink("Go back to page", "Index", "Game")

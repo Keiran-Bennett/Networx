@@ -1,0 +1,46 @@
+﻿@model  IEnumerable<Networx.Models.Game>
+@{
+    ViewBag.Title = "Game";
+}
+
+<h2>Games</h2>
+<p>
+    @Html.ActionLink("Create New", "addgame","Home")
+</p>
+<table class="table">
+    <tr>
+        <th>ID</th>
+        <th>Title</th>
+        <th>Genre</th>
+        <th>Date released</th>
+        <th>Price range</th>
+        <th></th>
+    </tr>
+
+
+
+
+    @foreach (var item in Model)
+    {
+
+        <tr>
+            <td>@Html.DisplayFor(modelitem => item.Game_ID)</td>
+            <td>@Html.DisplayFor(modelitem => item.Title)</td>
+            <td>@Html.DisplayFor(modelitem => item.Genre)</td>
+            <td>@Html.DisplayFor(modelitem => item.Year_published)</td>
+            <td>@Html.DisplayFor(modelitem => item.Price_range)</td>
+
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.Game_ID }) |
+                @Html.ActionLink("Reviews", "ReviewPage", new { id = item.Game_ID }) |
+                @Html.ActionLink("Details", "Details", new { id = item.Game_ID }) |
+                @Html.ActionLink("Delete", "delete", new { id = item.Game_ID })
+            </td>
+
+        </tr>
+
+
+
+    }
+
+</table>

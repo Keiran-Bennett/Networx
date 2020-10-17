@@ -1,0 +1,38 @@
+﻿@model IEnumerable<Networx.Models.Review>
+
+@{
+    ViewBag.Title = "ReviewPage";
+}
+
+<h2>ReviewPage</h2>
+
+<p>
+    @Html.ActionLink("Create New", "addreview")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Review_text)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Review_score)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Review_text)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Review_score)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "EditReview", new { id=item.Review_ID }) |
+            @Html.ActionLink("Delete", "deleteReview", new { id=item.Review_ID })
+        </td>
+    </tr>
+}
+
+</table>

@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="networxModelStoreContainer" CdmEntityContainer="networxDB">
+    <EntitySetMapping Name="Games">
+      <EntityTypeMapping TypeName="networxModel.Game">
+        <MappingFragment StoreEntitySet="Games">
+          <ScalarProperty Name="Game_ID" ColumnName="Game ID" />
+          <ScalarProperty Name="Title" ColumnName="Title" />
+          <ScalarProperty Name="Genre" ColumnName="Genre" />
+          <ScalarProperty Name="Year_published" ColumnName="Year published" />
+          <ScalarProperty Name="Price_range" ColumnName="Price range" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Reviews">
+      <EntityTypeMapping TypeName="networxModel.Review">
+        <MappingFragment StoreEntitySet="Review">
+          <ScalarProperty Name="Review_ID" ColumnName="Review ID" />
+          <ScalarProperty Name="Game_id" ColumnName="Game id" />
+          <ScalarProperty Name="User_id" ColumnName="User id" />
+          <ScalarProperty Name="Review_text" ColumnName="Review text" />
+          <ScalarProperty Name="Review_score" ColumnName="Review score" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Reviews1">
+      <EntityTypeMapping TypeName="networxModel.Review1">
+        <MappingFragment StoreEntitySet="Reviews">
+          <ScalarProperty Name="Review_ID" ColumnName="Review ID" />
+          <ScalarProperty Name="Game_ID" ColumnName="Game ID" />
+          <ScalarProperty Name="User_ID" ColumnName="User ID" />
+          <ScalarProperty Name="Review_text" ColumnName="Review text" />
+          <ScalarProperty Name="Rating" ColumnName="Rating" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Users">
+      <EntityTypeMapping TypeName="networxModel.User">
+        <MappingFragment StoreEntitySet="Users">
+          <ScalarProperty Name="User_ID" ColumnName="User ID" />
+          <ScalarProperty Name="Username" ColumnName="Username" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

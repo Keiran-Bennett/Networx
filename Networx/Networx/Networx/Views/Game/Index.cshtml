@@ -1,0 +1,62 @@
+﻿@model  IEnumerable<Networx.Models.Game>
+@{
+    ViewBag.Title = "Game";
+}
+
+<h2>Games</h2>
+<p>@*Calls the add game from the game controller*@
+    @Html.ActionLink("Create new game", "addgame", "Game")
+</p>
+
+@*Calls the index method for the game controller to the post method*@
+@using (Html.BeginForm("Index","Game", FormMethod.Get))
+{
+    @*Creates the radio buttons to select for the filter*@
+    <b>Search by:</b>
+    @Html.RadioButton("search", "Title") <text>Title</text>
+    @Html.RadioButton("search", "Genre") <text>Genre</text>
+    @Html.RadioButton("search", "Year_published") <text>Year published</text>
+    @Html.RadioButton("search", "Price_range") <text>Price range</text>
+    @*Creates the search box for the filter*@
+        @Html.TextBox("searchBox") <input type="submit" value="SearchBox" />
+}
+        @*Define the table names*@
+        <table class="table">
+            <tr>
+                <th>ID</th>
+                <th>Title</th>
+                <th>Genre</th>
+                <th>Date released</th>
+                <th>Price range</th>
+                <th>Overall rating</th>
+                <th></th>
+            </tr>
+
+
+
+            @*C# code using razor to loop through each game model and put the correct details in every column*@
+            @foreach (var item in Model)
+            {
+
+        <tr>
+            <td>@Html.DisplayFor(modelitem => item.Game_ID)</td>
+            <td>@Html.DisplayFor(modelitem => item.Title)</td>
+            <td>@Html.DisplayFor(modelitem => item.Genre)</td>
+            <td>@Html.DisplayFor(modelitem => item.Year_published)</td>
+            <td>@Html.DisplayFor(modelitem => item.Price_range)</td>
+            <td>@Html.DisplayFor(modelitem => item.Review_Score)</td>
+
+            <td>
+                @*Creates the action links that are clicked to do the appropiate tasks passing the id value to populate the going to form*@
+                @Html.ActionLink("Edit", "Edit", new { id = item.Game_ID }) |
+                @Html.ActionLink("Reviews", "ReviewPage", "Review", new { id = item.Game_ID }, null) |
+                @Html.ActionLink("Delete", "delete", new { id = item.Game_ID })
+            </td>
+
+        </tr>
+
+
+
+            }
+
+        </table>
