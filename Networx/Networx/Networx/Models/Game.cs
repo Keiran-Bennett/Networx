@@ -22,18 +22,22 @@ namespace Networx.Models
         }
     
         public int Game_ID { get; set; }
+        //Validation for the title of the game is not null
         [Required(ErrorMessage = "Please enter a title")]
-     
         public string Title { get; set; }
+
+        //Validation for the genre of the game
         [Required(ErrorMessage = "Please enter a genre")]
-      
         public string Genre { get; set; }
 
+        //Requires a value but also creates a dateicker for the user to interact with to validate to a uk date instead of US date
+        //Displayformat changes it ito a uk date format for display
         [Required(ErrorMessage = "Please enter a Year published")]
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
         public System.DateTime Year_published { get; set; }
 
+        //Required for the form and ensures that any currency entered is validated to the correct currency 
         [Required(ErrorMessage = "Please enter a price range")]
         [DataType(DataType.Currency)]
         public string Price_range { get; set; }

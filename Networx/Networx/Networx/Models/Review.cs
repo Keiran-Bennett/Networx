@@ -16,14 +16,18 @@ namespace Networx.Models
     public partial class Review
     {
         public int Review_ID { get; set; }
+        //Validation for the dropdown list to select game ID
         [Required(ErrorMessage = "Please enter a game from the dropdown")]
         
         public int Game_id { get; set; }
 
+        //No validation for the User ID because this is automatically added in the controller by getting the current user
         public int User_id { get; set; }
+        //Required text for the review
         [Required(ErrorMessage = "Please enter the text for the review")]
-        
         public string Review_text { get; set; }
+
+        //Validation for selecting a review score
         [Required(ErrorMessage = "Please enter a review score")]
         
         public int Review_score { get; set; }

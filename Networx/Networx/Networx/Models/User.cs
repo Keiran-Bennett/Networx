@@ -22,13 +22,16 @@ namespace Networx.Models
         }
     
         public int User_ID { get; set; }
+        //Validation for username
         [Required(ErrorMessage = "Please enter your username")]
         
         public string Username { get; set; }
+        //Validation for username and the length for the password
         [Required(ErrorMessage = "Please enter your password")]
-        
+        [StringLength(50,MinimumLength =8)]
         public string Password { get; set; }
     
+        //Virtual due to it having a one to many relationship with the reviews data model
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Review> Reviews { get; set; }
     }

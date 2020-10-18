@@ -43,6 +43,8 @@
 
 }
 
-<div>
-    @Html.ActionLink("Click to register","Register")
+<div class="form-group">
+    <div class="col-md-offset-2 col-md-10">
+        <input type="submit" value="Register"  onclick="location.href='@Url.Action("Register", "Account")'" class="btn btn-default" />
+    </div>
 </div>
