@@ -14,7 +14,7 @@ namespace Networx.Controllers
     public class AccountController : Controller
     {
           
-        //Taken from a website and reworked into a method due to the crypto nature of the code 
+        //Taken from a website and reworked into a method due to the cryptographic nature of the code 
         private string sha256(string entry)
         {
             //Creates an instance of the hash
@@ -85,25 +85,37 @@ namespace Networx.Controllers
             //Using the database 
             using (var context = new networxEntities())
             {
-              
-                try
+                bool userExists = context.Users.Any(x => x.Username == model.Username);
+              if(userExists)
                 {
-                    string hash = sha256(model.Password);
-                    model.Password = hash;
-                    //add the new user to the database based of the user model
-                    context.Users.Add(model);
-                    //Saves the updated information to the database 
-                    context.SaveChanges();
+                    ModelState.AddModelError(string.Empty, "Username taken please take another one");
+                    return View();
                 }
-                catch(Exception ex)
+                else
                 {
-                    throw ex;
+                    try
+                    {
+                        //Hash the password
+                        string hash = sha256(model.Password);
+                        model.Password = hash;
+                        //add the new user to the database based of the user model
+                        context.Users.Add(model);
+                        //Saves the updated information to the database 
+                        context.SaveChanges();
+                        //After the account has been made it takes you back to the login page 
+                        return RedirectToAction("Login");
+                    }
+                    catch (Exception ex)
+                    {
+                        throw ex;
+                    }
                 }
+
+               
 
 
                 }
-            //After the account has been made it takes you back to the login page 
-            return RedirectToAction("Login");
+            
         }
 
         //Cancelling authentication

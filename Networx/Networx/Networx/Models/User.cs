@@ -23,12 +23,10 @@ namespace Networx.Models
     
         public int User_ID { get; set; }
         [Required(ErrorMessage = "Please enter your username")]
-        //Prevents sql injection through tautology
-        [RegularExpression("@^[^=]&", ErrorMessage = "cannot put equals in this form")]
+        
         public string Username { get; set; }
         [Required(ErrorMessage = "Please enter your password")]
-        //Prevents sql injection through tautology
-        [RegularExpression ("@^[^=]&",ErrorMessage ="cannot put equals in this form")]
+        
         public string Password { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

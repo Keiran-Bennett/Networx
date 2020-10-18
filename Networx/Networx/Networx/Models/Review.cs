@@ -16,18 +16,16 @@ namespace Networx.Models
     public partial class Review
     {
         public int Review_ID { get; set; }
-        [Required(ErrorMessage = "Please enter a game")]
-        //Prevents sql injection through tautology
-        [RegularExpression("@^[^=]&", ErrorMessage = "cannot put equals in this form")]
+        [Required(ErrorMessage = "Please enter a game from the dropdown")]
+        
         public int Game_id { get; set; }
+
         public int User_id { get; set; }
         [Required(ErrorMessage = "Please enter the text for the review")]
-        //Prevents sql injection through tautology
-        [RegularExpression("@^[^=]&", ErrorMessage = "cannot put equals in this form")]
+        
         public string Review_text { get; set; }
         [Required(ErrorMessage = "Please enter a review score")]
-        //Prevents sql injection through tautology
-        [RegularExpression("@^[^=]&", ErrorMessage = "cannot put equals in this form")]
+        
         public int Review_score { get; set; }
     
         public virtual Game Game { get; set; }

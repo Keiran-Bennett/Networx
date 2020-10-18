@@ -4,7 +4,7 @@
 }
 
 <h2>Games</h2>
-<p>@*Calls the add game from the game controller*@
+<p>@*Calls the add game method from the game controller*@
     @Html.ActionLink("Create new game", "addgame", "Game")
 </p>
 
@@ -48,7 +48,7 @@
 
             <td>
                 @*Creates the action links that are clicked to do the appropiate tasks passing the id value to populate the going to form*@
-                @Html.ActionLink("Edit", "Edit", new { id = item.Game_ID }) |
+                @Html.ActionLink("Update", "Edit", new { id = item.Game_ID }) |
                 @Html.ActionLink("Reviews", "ReviewPage", "Review", new { id = item.Game_ID }, null) |
                 @Html.ActionLink("Delete", "delete", new { id = item.Game_ID })
             </td>

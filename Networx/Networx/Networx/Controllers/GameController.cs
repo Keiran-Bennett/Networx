@@ -147,10 +147,11 @@ namespace Networx.Controllers
         public ActionResult addgame(Game game)
         {
             //How to check if the game already exists 
-            var gameExists = db.Games.Any(x => x.Title == game.Title);
+            bool gameExists = db.Games.Any(x => x.Title == game.Title);
             if (gameExists)
             {
-
+                ModelState.AddModelError(string.Empty, "Game already exists, please add another title");
+                return View();
 
             }
             else
@@ -166,8 +167,9 @@ namespace Networx.Controllers
                 {
                     throw ex;
                 }
+                return RedirectToAction("Index");
             }//Redirect to the game list 
-            return RedirectToAction("Index");
+           
         }
 
 

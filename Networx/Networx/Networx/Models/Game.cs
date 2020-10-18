@@ -23,20 +23,19 @@ namespace Networx.Models
     
         public int Game_ID { get; set; }
         [Required(ErrorMessage = "Please enter a title")]
-        //Prevents sql injection through tautology
-        [RegularExpression("@^[^=]&", ErrorMessage = "cannot put equals in this form")]
+     
         public string Title { get; set; }
         [Required(ErrorMessage = "Please enter a genre")]
-        //Prevents sql injection through tautology
-        [RegularExpression("@^[^=]&", ErrorMessage = "cannot put equals in this form")]
+      
         public string Genre { get; set; }
+
         [Required(ErrorMessage = "Please enter a Year published")]
-        //Prevents sql injection through tautology
-        [RegularExpression("@^[^=]&", ErrorMessage = "cannot put equals in this form")]
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
         public System.DateTime Year_published { get; set; }
+
         [Required(ErrorMessage = "Please enter a price range")]
-        //Prevents sql injection through tautology
-        [RegularExpression("@^[^=]&", ErrorMessage = "cannot put equals in this form")]
+        [DataType(DataType.Currency)]
         public string Price_range { get; set; }
         public Nullable<decimal> Review_Score { get; set; }
     
