@@ -9,6 +9,7 @@ using System.Security.Cryptography;
 using System.Data.Entity.Infrastructure;
 using System.Collections;
 using System.Data.Entity.ModelConfiguration.Conventions;
+using System.Data.Entity.Validation;
 
 namespace Networx.Controllers
 {
@@ -173,8 +174,8 @@ namespace Networx.Controllers
         }
 
 
-      //Call the edit page 
-        public ActionResult Edit(Game game, int id)
+        //Call the edit page 
+        public ActionResult Edit(int id)
         {
             //Select the game based on the id passed
             Game gameNew = db.Games.Single(x => x.Game_ID == id);
@@ -202,20 +203,46 @@ namespace Networx.Controllers
             //Goes to the games list 
             return RedirectToAction("Index");
         }
-        
-        public ActionResult Update(Game game)
+
+
+       [HttpPost]
+        public ActionResult Edit(Game game)
         {
-            //Get the current game
-            Game gameNew = db.Games.Single(x => x.Game_ID == game.Game_ID);
-            //Update all the values based on the new info put in the home
-            gameNew.Title = game.Title;
-            gameNew.Genre = game.Genre;
-            gameNew.Year_published = game.Year_published;
-            gameNew.Price_range = game.Price_range;
-            //Save the changes
-            db.SaveChanges();
-            //Go back to the game list view 
-            return RedirectToAction("Index");
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    //Get the current game
+                    Game gameNew = db.Games.Single(x => x.Game_ID == game.Game_ID);
+                    //Update all the values based on the new info put in the home
+                    gameNew.Title = game.Title;
+                    gameNew.Genre = game.Genre;
+                    gameNew.Year_published = game.Year_published;
+                    gameNew.Price_range = game.Price_range;
+                    //Save the changes
+                    db.SaveChanges();
+                    //Go back to the game list view
+                }
+                catch (DbEntityValidationException dbEx)
+                {
+                    foreach (var validationErrors in dbEx.EntityValidationErrors)
+                    {
+                        foreach (var validationError in validationErrors.ValidationErrors)
+                        {
+                            System.Console.WriteLine("Property: {0} Error: {1}", validationError.PropertyName, validationError.ErrorMessage);
+                        }
+                    }
+                }
+
+                return RedirectToAction("Index");
+            }
+            else
+            {
+
+                ModelState.AddModelError(string.Empty, "No values can be empty, please fill in any blank field");
+                return View(game);
+            }
+
         }
 
        

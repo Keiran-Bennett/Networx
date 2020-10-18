@@ -28,7 +28,7 @@ namespace Networx.Models
         public string Username { get; set; }
         //Validation for username and the length for the password
         [Required(ErrorMessage = "Please enter your password")]
-        [StringLength(50,MinimumLength =8)]
+        [StringLength(70,MinimumLength =8)]
         public string Password { get; set; }
     
         //Virtual due to it having a one to many relationship with the reviews data model
